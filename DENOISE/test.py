@@ -12,7 +12,7 @@ from config import opt
 
 # Here is the path of your test image, 'i' means the ith image, you only need to provide the ground truth image
 # Then we add Gaussian noise to the gt image
-i = 1
+i = 2
 label_img = './Set12/%.2d.png'%i
 
 
@@ -39,13 +39,15 @@ with torch.no_grad():
     output = torch.clamp(output, min=0, max=1)
     output = transform2(output)
 
-    # output.show()
     # To save the output(denoised) image, you must create a new folder. Here is my path.
-    output.save('./output/sigma%d/%d.png'%(opt.noise_level, i))
+    # output.save('./output/sigma%d/%d.png'%(opt.noise_level, i))
 
     img_noise = transform2(img_noise.resize_(img_H, img_W))
-    # img_noise.show()
-    img_noise.save('./output/sigma%d/%d_noise.png'%(opt.noise_level, i))
+    img_noise.show()
+    # img_noise.save('./output/sigma%d/%d_noise.png'%(opt.noise_level, i))
+
+    # show output image
+    output.show()
     output = np.array(output)   # output:0~255
 
     # Because of the randomness of Gaussian noise, the output results are different each time.
